@@ -1,24 +1,22 @@
 package ru.yakaska.metod2.lab12;
 
-import ru.yakaska.metod2.lab12.shape.Circle;
-import ru.yakaska.metod2.lab12.shape.Line;
-import ru.yakaska.metod2.lab12.shape.Oval;
 import ru.yakaska.metod2.lab12.shape.Rectangle;
 import ru.yakaska.metod2.lab12.shape.Shape;
+import ru.yakaska.metod2.lab12.shape.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 // App class
 class Lab12 extends JFrame {
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 600;
     String backgroundImagePath;
-    String animationImagesPath = "C:\\Users\\valen\\IdeaProjects\\Java-Mirea\\src\\ru\\yakaska\\metod2\\lab12\\frames";
+    String animationImagesPath = "/home/yakaska/IdeaProjects/JavaPractice/src/ru/yakaska/metod2/lab12/frames";
     int method;
 
     // Init
@@ -120,12 +118,14 @@ class Lab12 extends JFrame {
     }
 
     void animate(String framesPath, Graphics2D g) {
-        File dir = new File(framesPath);
-        for (File file : Objects.requireNonNull(dir.listFiles())) {
+        File[] dir = new File(framesPath).listFiles();
+        assert dir != null;
+        Arrays.sort(dir);
+        for (File file : dir) {
             Image frame = Toolkit.getDefaultToolkit().getImage(file.getPath());
             g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
             try {
-                Thread.sleep(350);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -143,6 +143,5 @@ class Lab12 extends JFrame {
         } else {
             System.out.println("[!] Background image path is empty");
         }
-        /* "C:/Users/moran/Desktop/MIREA/Mirea-Java-Tasks/Java_task_8/background.jpg" */
     }
 }
